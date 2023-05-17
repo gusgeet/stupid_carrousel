@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <div class="slider">
+    <div class="slide">
+      <img src="https://source.unsplash.com/random?landscape,mountain" alt="">
+    </div>
+    <div class="slide">
+      <img src="https://source.unsplash.com/random?landscape,cars" alt="">
+    </div>
+    <div class="slide">
+      <img src="https://source.unsplash.com/random?landscape,night" alt="">
+    </div>
+    <div class="slide">
+      <img src="https://source.unsplash.com/random?landscape,city" alt="">
+    </div>
+    <button class="btn btn-next">
+      >
+    </button>
+    <button class="btn btn-prev">
+      <
+    </button>
+  </div>
+  <ul class="ul">
+    <li>
+      <a class="carrousel-btn-0" onclick="MoveToX(0)"></a>
+    </li>
+    <li>
+      <a class="carrousel-btn-1" onclick="MoveToX(1)"></a>
+    </li>
+    <li>
+      <a class="carrousel-btn-2" onclick="MoveToX(2)"></a>
+    </li>
+    <li>
+      <a class="carrousel-btn-3" onclick="MoveToX(3)"></a>
+    </li>
+  </ul>
+</body>
+</html>
+<script>
+const slides = document.querySelectorAll(".slide")
+slides.forEach((slide, idx) => {
+    slide.style.transform = `translateX(${idx * 100}%)`
+})
+
+
+
+let maxslide = slides.length  - 1;
+let curSlide = 0
+const nextSlide = document.querySelector(".btn-next")
+
+const prevSlide = document.querySelector(".btn-prev")
+const activeBtn = document.querySelector(`.carrousel-btn-${curSlide}`)
+  activeBtn.style.background = "red"
+
+prevSlide.addEventListener("click", function() {
+  const unactiveBtn = document.querySelector(`.carrousel-btn-${curSlide}`)
+  if (unactiveBtn.style)
+    unactiveBtn.style.background = "white"
+  if (curSlide !== 0) {
+    curSlide--
+  }
+  const activeBtn = document.querySelector(`.carrousel-btn-${curSlide}`)
+  activeBtn.style.background = "red"
+  
+  slides.forEach((slide, indx) => {
+    slide.style.transform = `translateX(${100 * (indx - curSlide)}%)`;
+  });
+})
+
+
+nextSlide.addEventListener("click", function() {
+  const unactiveBtn = document.querySelector(`.carrousel-btn-${curSlide}`)
+  if (unactiveBtn.style)
+    unactiveBtn.style.background = "white"
+  if (curSlide === maxslide) {
+    curSlide = maxslide;
+  }
+  else 
+    curSlide++;
+  const activeBtn = document.querySelector(`.carrousel-btn-${curSlide}`)
+  activeBtn.style.background = "red"
+
+  slides.forEach((slide, idx) => {
+    slide.style.transform = `translateX(${100 * (idx - curSlide)}%)`
+  })
+})
+
+function MoveToX(n) {
+  const unactiveBtn = document.querySelector(`.carrousel-btn-${curSlide}`)
+  if (unactiveBtn.style)
+    unactiveBtn.style.background = "white"
+  const activeBtn = document.querySelector(`.carrousel-btn-${n}`)
+  activeBtn.style.background = "red"
+  curSlide = n
+
+  slides.forEach((slide, idx) => {
+    slide.style.transform = `translateX(${100 * (idx - curSlide)}%)`
+  })
+}
+
+</script>
+<style>
+body {
+  height: 100vh;
+  display: grid;
+  place-items: center;
+}
+a {
+  position: absolute;
+}
+
+.slider {
+  width: 100%;
+  max-width: 800px;
+  height: 350px;
+  position: relative;
+  overflow: hidden;
+  border-radius: 15px;
+}
+.slide {
+  width: 100%;
+  max-width: 800px;
+  height: 350px;
+  position:  absolute;
+  transition: all 0.4s ease-in-out;
+}
+
+.slide img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.btn {
+  position: absolute;
+  width: 40px;
+  height: 40px;
+  padding: 10px;
+  border: none;
+  border-radius: 50px;
+  z-index: 10px;
+  cursor: pointer;
+  background-color: #fff;
+  font-size: 18px;
+}
+
+.btn:active {
+  transform: scale(1.1);
+  background-color: lightgray;
+  font-weight: 600;
+  color: lightslategray;
+}
+
+.btn-prev {
+  top: 45%;
+  left: 2%;
+}
+
+.btn-next {
+  top: 45%;
+  right: 2px;
+}
+
+.ul {
+  position: absolute;
+  display: flex;
+  top: 65%;
+  gap: 25px;
+}
+
+.ul > li {
+  list-style: none;
+}
+
+li > a {
+  border-radius: 50%;
+  width: 15px;
+  height: 15px;
+  background: white;
+  cursor: pointer;
+}
+
+</style>
