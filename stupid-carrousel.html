@@ -48,11 +48,20 @@ const slides = document.querySelectorAll(".slide")
 slides.forEach((slide, idx) => {
     slide.style.transform = `translateX(${idx * 100}%)`
 })
-
-
-
 let maxslide = slides.length  - 1;
 let curSlide = 0
+let interId;
+
+function Start(){
+  if(!interId) {
+    interId = setInterval(movement, 2000)
+  }
+} 
+function movement() {
+  if(curSlide !== maxslide) {
+    nextSlide.click()
+  }
+}
 const nextSlide = document.querySelector(".btn-next")
 
 const prevSlide = document.querySelector(".btn-prev")
@@ -65,7 +74,10 @@ prevSlide.addEventListener("click", function() {
     unactiveBtn.style.background = "white"
   if (curSlide !== 0) {
     curSlide--
+  } else {
+    curSlide = maxslide
   }
+
   const activeBtn = document.querySelector(`.carrousel-btn-${curSlide}`)
   activeBtn.style.background = "red"
   
@@ -80,7 +92,7 @@ nextSlide.addEventListener("click", function() {
   if (unactiveBtn.style)
     unactiveBtn.style.background = "white"
   if (curSlide === maxslide) {
-    curSlide = maxslide;
+    curSlide = 0;
   }
   else 
     curSlide++;
@@ -90,9 +102,12 @@ nextSlide.addEventListener("click", function() {
   slides.forEach((slide, idx) => {
     slide.style.transform = `translateX(${100 * (idx - curSlide)}%)`
   })
+  
 })
 
+
 function MoveToX(n) {
+  
   const unactiveBtn = document.querySelector(`.carrousel-btn-${curSlide}`)
   if (unactiveBtn.style)
     unactiveBtn.style.background = "white"
@@ -169,10 +184,10 @@ a {
 }
 
 .ul {
-  position: absolute;
   display: flex;
-  top: 65%;
-  gap: 25px;
+  margin: 300px 0 0 0;
+  position: absolute;
+  gap: 20px;
 }
 
 .ul > li {
